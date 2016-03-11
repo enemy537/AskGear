@@ -19,22 +19,22 @@
             android:id="@+id/content_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:fontFamily="sans-serif-light"
             android:textSize="20sp"
             android:textStyle="bold"
             android:text=""/>
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:scaleType="centerInside"
-            android:src=""/>
-        <ScrollView
+            android:id="@+id/content_image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
+            android:scaleType="centerInside"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
             android:paddingBottom="8dp"
             android:paddingTop="8dp">
             <TextView
@@ -60,6 +60,7 @@
         />
         <Button style="@style/buttonContent"
             android:text="Descubir +"
+            android:onClick="getMoreContent"
          />
         <Button style="@style/buttonContent"
             android:text="Saiba mais"
