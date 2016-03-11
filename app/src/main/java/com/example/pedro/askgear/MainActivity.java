@@ -10,6 +10,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(getIntent().getBooleanExtra("EXIT",false))
+            finish();
     }
     public void newContent(View view){
         Intent intent = new Intent(this,ContentActivity.class);

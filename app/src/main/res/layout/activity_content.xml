@@ -15,15 +15,26 @@
         android:layout_above="@+id/layout_buttons"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/content_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:fontFamily="sans-serif-light"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text=""/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/content_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text=""
+                android:paddingBottom="8dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimaryDark"/>
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/content_image"
@@ -57,6 +68,7 @@
 
         <Button style="@style/buttonContent"
             android:text="Sair"
+            android:onClick="closeAll"
         />
         <Button style="@style/buttonContent"
             android:text="Descubir +"
@@ -64,6 +76,7 @@
          />
         <Button style="@style/buttonContent"
             android:text="Saiba mais"
+            android:onClick="knowMore"
         />
 
     </LinearLayout>
