@@ -78,6 +78,5 @@
             android:text="Saiba mais"
             android:onClick="knowMore"
         />
-
     </LinearLayout>
 </RelativeLayout>

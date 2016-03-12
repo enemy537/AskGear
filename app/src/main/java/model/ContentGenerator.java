@@ -23,7 +23,6 @@ public class ContentGenerator {
         is.read(buffer);
         is.close();
         json = new String(buffer, "UTF-8");
-        Log.d("ContentActivity",json);
         gson = new Gson();
     }
 

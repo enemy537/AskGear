@@ -6,13 +6,14 @@ package model;
 public class Curiosity {
     private String title;
     private String content;
-    private String imageResource;
+    private String image;
+    private String query;
 
-    public Curiosity(String title, String content, String imageResource) {
-        super();
+    public Curiosity(String title, String content, String image, String query) {
         this.title = title;
         this.content = content;
-        this.imageResource = imageResource;
+        this.image = image;
+        this.query = query;
     }
 
     public String getTitle() {
@@ -24,6 +25,10 @@ public class Curiosity {
     }
 
     public String getImage() {
-        return imageResource;
+        return image;
+    }
+
+    public String getQuery() {
+        return query;
     }
 }

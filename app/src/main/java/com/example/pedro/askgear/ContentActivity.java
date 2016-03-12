@@ -1,5 +1,6 @@
 package com.example.pedro.askgear;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -7,12 +8,14 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -24,7 +27,7 @@ public class ContentActivity extends AppCompatActivity {
     public static final String PATH = "curiosity.json";
     private ContentGenerator contentGenerator;
     private List<Curiosity> contentList;
-    private String currentSubject;
+    private Curiosity currentSubject;
     private int index;
 
     @Override
@@ -52,7 +55,6 @@ public class ContentActivity extends AppCompatActivity {
         return is;
     }
     private void setTitle(String title){
-        currentSubject = title;
         TextView textView = (TextView) findViewById(R.id.content_title);
         textView.setText(title);
     }
@@ -62,21 +64,22 @@ public class ContentActivity extends AppCompatActivity {
     }
     private void setImage(String image){
         ImageView imageView = (ImageView) findViewById(R.id.content_image);
-        int imageResource = getResources().getIdentifier(image,"string",getPackageName());
+        int imageResource = getResources().getIdentifier(image, "String", getPackageName());
+        Log.v("ContentActivity", imageResource + "");
         Drawable drawable = getResources().getDrawable(imageResource);
         imageView.setImageDrawable(drawable);
     }
     private void newContent(){
-        Curiosity randonContent = contentList.get(index);
-
         if(index == contentList.size()-1)
             index = 0;
         else
             index++;
 
-        setTitle(randonContent.getTitle());
-        setText(randonContent.getText());
-        setImage(randonContent.getImage());
+        currentSubject = contentList.get(index);
+
+        setTitle(currentSubject.getTitle());
+        setText(currentSubject.getText());
+        setImage(currentSubject.getImage());
     }
     public void getMoreContent(View view){
         newContent();
@@ -89,11 +92,15 @@ public class ContentActivity extends AppCompatActivity {
         finish();
         System.exit(1);
     }
-    public void knowMore(View view){
-        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-        intent.setType("*/*");
-        intent.setData(Uri.parse(currentSubject));
-        if (intent.resolveActivity(getPackageManager()) != null)
+    public void knowMore(View view) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+            intent.putExtra(SearchManager.QUERY, currentSubject.getQuery());
             startActivity(intent);
+        }catch (Exception e){
+            Context context = getApplicationContext();
+            CharSequence charSequence = "Erro ao pesquisar conteúdo";
+            Toast toast = Toast.makeText(context,charSequence,Toast.LENGTH_LONG);
+        }
     }
 }
