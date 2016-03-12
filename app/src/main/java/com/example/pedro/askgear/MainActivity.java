@@ -11,9 +11,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**
+         * Receives a boolean variable from child activity for
+         * close both intents simultaneously
+         */
         if(getIntent().getBooleanExtra("EXIT",false))
             finish();
     }
+
+    /**
+     * Create the Content Activity
+     * @param view default parameter to onClick methods
+     */
     public void newContent(View view){
         Intent intent = new Intent(this,ContentActivity.class);
         startActivity(intent);

@@ -24,7 +24,9 @@ import model.ContentGenerator;
 import model.Curiosity;
 
 public class ContentActivity extends AppCompatActivity {
+    // Path definition
     public static final String PATH = "curiosity.json";
+    // Objects definition
     private ContentGenerator contentGenerator;
     private List<Curiosity> contentList;
     private Curiosity currentSubject;
@@ -34,13 +36,18 @@ public class ContentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
+        // Index for Curiosity list instantiation
         index = 0;
 
         try {
+            // Try to create ContentGenerator object
             contentGenerator = new ContentGenerator(prepareFiles());
+            // Create the curiosity list and randomize it
             contentList = contentGenerator.getContentList();
             Collections.shuffle(contentList);
+            // Set curiosity content for the first use
             newContent();
+            // If an error occur, show a Toast message
         }catch (IOException e){
             Context context = getApplicationContext();
             CharSequence text = "Erro ao importar o dataset.";
@@ -49,19 +56,39 @@ public class ContentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Pass the path to JSON
+     * @return InputStream containing the path to JSON file
+     * @throws IOException if file not exist or contained errors
+     */
     private InputStream prepareFiles() throws IOException{
         AssetManager assetManager = this.getAssets();
         InputStream is = assetManager.open(PATH);
         return is;
     }
+
+    /**
+     * Set title in activity content
+     * @param title curiosity title
+     */
     private void setTitle(String title){
         TextView textView = (TextView) findViewById(R.id.content_title);
         textView.setText(title);
     }
+
+    /**
+     * Set content text in activity content
+     * @param text curiosity content text
+     */
     private void setText(String text){
         TextView textView = (TextView) findViewById(R.id.content_text);
         textView.setText(text);
     }
+    /**
+     * Set descritive image in activity content
+     * @param image curiosity image path
+     * The path must be converted to Drawable
+     */
     private void setImage(String image){
         ImageView imageView = (ImageView) findViewById(R.id.content_image);
         int imageResource = getResources().getIdentifier(image, "String", getPackageName());
@@ -69,6 +96,10 @@ public class ContentActivity extends AppCompatActivity {
         Drawable drawable = getResources().getDrawable(imageResource);
         imageView.setImageDrawable(drawable);
     }
+
+    /**
+     * Prepare variable and list position for curiosity
+     */
     private void newContent(){
         if(index == contentList.size()-1)
             index = 0;
@@ -81,9 +112,18 @@ public class ContentActivity extends AppCompatActivity {
         setText(currentSubject.getText());
         setImage(currentSubject.getImage());
     }
+
+    /**
+     * Action to change content
+     * @param view default parameter for onClick methods
+     */
     public void getMoreContent(View view){
         newContent();
     }
+    /**
+     * Action to close all intents and quit application
+     * @param view default parameter for onClick methods
+     */
     public void closeAll(View view){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -92,6 +132,10 @@ public class ContentActivity extends AppCompatActivity {
         finish();
         System.exit(1);
     }
+    /**
+     * Pass string query to the browser for more information
+     * @param view default parameter for onClick methods
+     */
     public void knowMore(View view) {
         try {
             Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
@@ -101,6 +145,7 @@ public class ContentActivity extends AppCompatActivity {
             Context context = getApplicationContext();
             CharSequence charSequence = "Erro ao pesquisar conteúdo";
             Toast toast = Toast.makeText(context,charSequence,Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 }
